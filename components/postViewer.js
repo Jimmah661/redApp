@@ -65,7 +65,7 @@ const PostViewer = ({children}) => {
     );
   } else {
     return (
-      <>
+      <View style={styles.flexOne}>
         <FlatList
           data={posts}
           extraData={posts}
@@ -79,19 +79,19 @@ const PostViewer = ({children}) => {
           )}
           refreshing={loading}
           onRefresh={refreshPosts}
-          onEndReached={loadPosts}
+          // onEndReached={loadPosts}
           onEndReachedThreshold={0.3}
           inverted={settings.invertedScrolling}
         />
         <PostModal />
         {children}
-      </>
+      </View>
     );
   }
 };
 
 const styles = StyleSheet.create({
-  wrapper: {
+  flexOne: {
     flex: 1,
   },
   spinner: {

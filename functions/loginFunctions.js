@@ -31,8 +31,7 @@ const config = {
   clientSecret: '', // empty string - needed for iOS
   scopes: scopes,
   serviceConfiguration: {
-    authorizationEndpoint: 'http://localhost:5000/red-app-a0c15/us-central1/redirect',
-    // authorizationEndpoint: 'https://www.reddit.com/api/v1/authorize.compact',
+    authorizationEndpoint: 'https://www.reddit.com/api/v1/authorize.compact',
     tokenEndpoint: 'https://www.reddit.com/api/v1/access_token',
   },
   customHeaders: {

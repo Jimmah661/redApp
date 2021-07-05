@@ -9,6 +9,7 @@ import {name as appName} from './app.json';
 import {DefaultTheme, Provider as PaperProvider} from 'react-native-paper';
 import {UserProvider} from './state/UserContext';
 import {SettingsProvider} from './state/AppSettingsContext';
+import {TempSettingsProvidor} from './state/TempSettingsContext';
 
 const theme = {
   ...DefaultTheme,
@@ -21,11 +22,13 @@ const theme = {
 const Main = () => {
   return (
     <PaperProvider theme={theme}>
-      <SettingsProvider>
-        <UserProvider>
-          <App />
-        </UserProvider>
-      </SettingsProvider>
+      <TempSettingsProvidor>
+        <SettingsProvider>
+          <UserProvider>
+            <App />
+          </UserProvider>
+        </SettingsProvider>
+      </TempSettingsProvidor>
     </PaperProvider>
   );
 };

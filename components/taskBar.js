@@ -1,14 +1,20 @@
 import React from 'react';
 import {StyleSheet} from 'react-native';
 import {useUser, useUpdateUser} from '../state/UserContext';
-import {Appbar, Menu, Text} from 'react-native-paper';
 import {useSettings, useUpdateSettings} from '../state/AppSettingsContext';
+import {
+  useTempSettings,
+  useUpdateTempSettings,
+} from '../state/TempSettingsContext';
+import {Appbar, Menu, Text} from 'react-native-paper';
 
 const TaskBar = () => {
   const user = useUser();
   const updateUser = useUpdateUser();
   const settings = useSettings();
   const updateSettings = useUpdateSettings();
+  const tempSettings = useTempSettings();
+  const updateTempSettings = useUpdateTempSettings();
 
   const currentSort = () => {
     if (user) {
@@ -27,7 +33,7 @@ const TaskBar = () => {
     changeMenuState();
   }
   return (
-    <Appbar style={{shadowOpacity: 0}}>
+    <Appbar style={styles.appBar}>
       <Appbar.Action
         icon={settings.overlayOpen ? 'undo-variant' : 'menu'}
         onPress={() => {
@@ -55,6 +61,10 @@ const TaskBar = () => {
         <Menu.Item onPress={() => changeSortState('New')} title="New" />
         <Menu.Item onPress={() => changeSortState('Top')} title="Top" />
       </Menu>
+      <Appbar.Action
+        icon={'magnify'}
+        onPress={() => updateTempSettings('modalOpen', !tempSettings.modalOpen)}
+      />
     </Appbar>
   );
 };
@@ -62,6 +72,10 @@ const TaskBar = () => {
 const styles = StyleSheet.create({
   sortText: {
     color: 'white',
+  },
+  appBar: {
+    shadowOpacity: 0,
+    opacity: 0.5,
   },
 });
 

@@ -88,14 +88,12 @@ const MenuDrawer = () => {
         },
       ]}>
       <View style={styles.userContainer}>
-        <View style={{width: '20%'}}>
-          <Image
-            style={styles.avatarImage}
-            source={{
-              uri: 'https://styles.redditmedia.com/t5_bpp3b/styles/profileIcon_i0jy0t6ko7171.png',
-            }}
-          />
-        </View>
+        <Image
+          style={styles.avatarImage}
+          source={{
+            uri: 'https://styles.redditmedia.com/t5_bpp3b/styles/profileIcon_i0jy0t6ko7171.png',
+          }}
+        />
         {userStatus()}
       </View>
       <Drawer.Section title="User">
