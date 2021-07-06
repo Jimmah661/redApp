@@ -72,15 +72,15 @@ class Post extends React.PureComponent {
     }
 
     function imageRender() {
+      function openPostModal() {
+        updateSettings('currentlyViewing', post);
+        updateSettings('modalOpen', true);
+        updateSettings('overlayOpen', true);
+      }
+
       if (post.thumbnail.match(RegExp(/https|http/g))) {
         return (
-          <TouchableWithoutFeedback
-            onPress={() => {
-              console.log(post.name);
-              updateSettings('currentlyViewing', post);
-              updateSettings('modalOpen', true);
-              updateSettings('overlayOpen', true);
-            }}>
+          <TouchableWithoutFeedback onPress={() => openPostModal()}>
             <Image
               source={{
                 uri: post.thumbnail,
@@ -91,13 +91,7 @@ class Post extends React.PureComponent {
         );
       } else if (post.thumbnail === 'image') {
         return (
-          <TouchableWithoutFeedback
-            onPress={() => {
-              console.log(post.name);
-              updateSettings('currentlyViewing', post);
-              updateSettings('modalOpen', true);
-              updateSettings('overlayOpen', true);
-            }}>
+          <TouchableWithoutFeedback onPress={() => openPostModal()}>
             <Image
               source={{
                 uri: post.url,
@@ -108,13 +102,7 @@ class Post extends React.PureComponent {
         );
       } else {
         return (
-          <TouchableWithoutFeedback
-            onPress={() => {
-              console.log(post.name);
-              updateSettings('currentlyViewing', post);
-              updateSettings('modalOpen', true);
-              updateSettings('overlayOpen', true);
-            }}>
+          <TouchableWithoutFeedback onPress={() => openPostModal()}>
             <Icon name="reddit" style={postStyles.postImage} size={50} />
           </TouchableWithoutFeedback>
         );
