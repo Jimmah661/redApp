@@ -10,13 +10,14 @@ import {
 } from '../functions/loginFunctions';
 import {useSettings, useUpdateSettings} from '../state/AppSettingsContext';
 import {useUser, useUpdateUser} from '../state/UserContext';
+import {useTempSettings} from '../state/TempSettingsContext';
 
 const MenuDrawer = () => {
   const user = useUser();
   const updateUser = useUpdateUser();
   const settings = useSettings();
   const updateSettings = useUpdateSettings();
-
+  const tempSettings = useTempSettings();
   // START Drawer state management
 
   const drawerWidth = useRef(new Animated.Value(-2000)).current;
@@ -38,12 +39,12 @@ const MenuDrawer = () => {
       }).start();
       console.info('Drawer Closed');
     }
-    if (settings.drawerOpen) {
+    if (tempSettings.drawerOpen) {
       openDrawer();
     } else {
       closeDrawer();
     }
-  }, [drawerWidth, settings.drawerOpen]);
+  }, [drawerWidth, tempSettings.drawerOpen]);
 
   // END Drawer state management
 

@@ -1,7 +1,6 @@
 import React from 'react';
 import {StyleSheet} from 'react-native';
 import {useUser, useUpdateUser} from '../state/UserContext';
-import {useSettings, useUpdateSettings} from '../state/AppSettingsContext';
 import {
   useTempSettings,
   useUpdateTempSettings,
@@ -11,8 +10,6 @@ import {Appbar, Menu, Text} from 'react-native-paper';
 const TaskBar = () => {
   const user = useUser();
   const updateUser = useUpdateUser();
-  const settings = useSettings();
-  const updateSettings = useUpdateSettings();
   const tempSettings = useTempSettings();
   const updateTempSettings = useUpdateTempSettings();
 
@@ -25,7 +22,7 @@ const TaskBar = () => {
   };
 
   function changeMenuState() {
-    updateSettings('menuOpen', !settings.menuOpen);
+    updateTempSettings('menuOpen', !tempSettings.menuOpen);
   }
 
   function changeSortState(sort) {
@@ -35,21 +32,21 @@ const TaskBar = () => {
   return (
     <Appbar style={styles.appBar}>
       <Appbar.Action
-        icon={settings.overlayOpen ? 'undo-variant' : 'menu'}
+        icon={tempSettings.overlayOpen ? 'undo-variant' : 'menu'}
         onPress={() => {
-          if (settings.modalOpen) {
-            updateSettings('modalOpen', false);
-            updateSettings('currentlyViewing', null);
-          } else if (settings.drawerOpen) {
-            updateSettings('drawerOpen', false);
-          } else if (!settings.modalOpen && !settings.drawerOpen) {
-            updateSettings('drawerOpen', true);
+          if (tempSettings.modalOpen) {
+            updateTempSettings('modalOpen', false);
+            updateTempSettings('currentlyViewing', null);
+          } else if (tempSettings.drawerOpen) {
+            updateTempSettings('drawerOpen', false);
+          } else if (!tempSettings.modalOpen && !tempSettings.drawerOpen) {
+            updateTempSettings('drawerOpen', true);
           }
-          updateSettings('overlayOpen', !settings.overlayOpen);
+          updateTempSettings('overlayOpen', !tempSettings.overlayOpen);
         }}
       />
       <Menu
-        visible={settings.menuOpen}
+        visible={tempSettings.menuOpen}
         anchor={
           <Text onPress={changeMenuState} style={styles.sortText}>
             {currentSort()}
