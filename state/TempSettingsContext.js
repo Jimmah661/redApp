@@ -14,6 +14,10 @@ export function useUpdateTempSettings() {
 export const TempSettingsProvidor = ({children}) => {
   const [tempSettings, setTempSettings] = useState({
     modalOpen: false,
+    menuOpen: false,
+    drawerOpen: false,
+    overlayOpen: false,
+    currentlyViewing: null,
   });
 
   async function updateTempSettings(newSetting, value) {
