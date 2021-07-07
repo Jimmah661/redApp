@@ -3,21 +3,20 @@ import {FlatList, StyleSheet, View} from 'react-native';
 import LoadingSpinner from './loadingSpinner';
 import Post from './PostViewer/post';
 import {supplyToken} from '../functions/loginFunctions';
-import {useSettings, useUpdateSettings} from '../state/AppSettingsContext';
+import {useSettings} from '../state/AppSettingsContext';
+import {useUpdateTempSettings} from '../state/TempSettingsContext';
 import PostModal from './postModal';
-// const window = Dimensions.get('window');
 
 // TODO - Need to sort out a better refreshing view
 // it's super jarring to clear the screen and go back to the loading spinnger
 
 const PostViewer = ({children}) => {
   const settings = useSettings();
-  const updateSettings = useUpdateSettings();
+  const updateTempSettings = useUpdateTempSettings();
 
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const after = useRef(null);
-  // const loaded = useRef(false);
 
   function loadPosts() {
     supplyToken('redappAccessToken').then(token => {
@@ -74,7 +73,7 @@ const PostViewer = ({children}) => {
             <Post
               post={item.item.data}
               settings={settings}
-              updateSettings={updateSettings}
+              updateSettings={updateTempSettings}
             />
           )}
           refreshing={loading}

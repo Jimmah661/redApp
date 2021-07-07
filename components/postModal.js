@@ -1,18 +1,27 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {
   View,
   StyleSheet,
-  // Button,
   SafeAreaView,
   Text,
   Image,
   ScrollView,
 } from 'react-native';
-import {useUpdateSettings, useSettings} from '../state/AppSettingsContext';
-import LoadingSpinner from './loadingSpinner';
-import {supplyToken} from '../functions/loginFunctions';
-
+import {useTempSettings} from '../state/TempSettingsContext';
 import {WebView} from 'react-native-webview';
+
+const extraStyles = StyleSheet.create({
+  textPost: {},
+  imagePost: {
+    width: '100%',
+    height: '100%',
+    resizeMode: 'contain',
+  },
+  linkPost: {
+    width: '100%',
+    height: '100%',
+  },
+});
 
 const TextPost = ({post}) => {
   return (
@@ -26,13 +35,7 @@ const TextPost = ({post}) => {
 };
 
 const ImagePost = ({post}) => {
-  return (
-    <Image
-      source={{uri: post.url}}
-      style={{width: '100%', height: '100%', resizeMode: 'contain'}}
-    />
-    // <Text>{post.url}</Text>
-  );
+  return <Image source={{uri: post.url}} style={extraStyles.imagePost} />;
 };
 
 const LinkPost = ({post}) => {
@@ -41,20 +44,18 @@ const LinkPost = ({post}) => {
     urlSplit[0] = 'https';
   }
   return (
-    <View style={{width: '100%', height: '100%'}}>
+    <View style={extraStyles.linkPost}>
       <WebView source={{uri: urlSplit.join(':')}} />
     </View>
-    // <Text>{JSON.stringify(urlSplit.join(':'))}</Text>
   );
 };
 
 const PostModal = () => {
-  const settings = useSettings();
-  // const updateSettings = useUpdateSettings();
+  const tempSettings = useTempSettings();
 
   const styles = StyleSheet.create({
     modalContainer: {
-      display: settings.modalOpen ? 'flex' : 'none',
+      display: tempSettings.modalOpen ? 'flex' : 'none',
       position: 'absolute',
       top: 0,
       left: 0,
@@ -73,18 +74,18 @@ const PostModal = () => {
   });
 
   function postTypeSorter() {
-    if (settings.currentlyViewing.is_self) {
-      return <TextPost post={settings.currentlyViewing} />;
-    } else if (settings.currentlyViewing.is_gallery) {
+    if (tempSettings.currentlyViewing.is_self) {
+      return <TextPost post={tempSettings.currentlyViewing} />;
+    } else if (tempSettings.currentlyViewing.is_gallery) {
       return <Text>This is a Gallery Post</Text>;
-    } else if (settings.currentlyViewing.post_hint === 'image') {
-      return <ImagePost post={settings.currentlyViewing} />;
-    } else if (settings.currentlyViewing.post_hint === 'hosted:video') {
+    } else if (tempSettings.currentlyViewing.post_hint === 'image') {
+      return <ImagePost post={tempSettings.currentlyViewing} />;
+    } else if (tempSettings.currentlyViewing.post_hint === 'hosted:video') {
       return <Text>This is a Hosted Video post</Text>;
-    } else if (settings.currentlyViewing.post_hint === 'rich:video') {
+    } else if (tempSettings.currentlyViewing.post_hint === 'rich:video') {
       return <Text>This is a Rich:Video</Text>;
-    } else if (settings.currentlyViewing.post_hint === 'link') {
-      return <LinkPost post={settings.currentlyViewing} />;
+    } else if (tempSettings.currentlyViewing.post_hint === 'link') {
+      return <LinkPost post={tempSettings.currentlyViewing} />;
     } else {
       return <Text>This type of post is not yet defined</Text>;
     }
@@ -92,7 +93,7 @@ const PostModal = () => {
 
   return (
     <View style={styles.modalContainer}>
-      {settings.currentlyViewing ? postTypeSorter() : null}
+      {tempSettings.currentlyViewing ? postTypeSorter() : null}
     </View>
   );
 };
